@@ -1,0 +1,18 @@
+name: Generate CRD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  run-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repository
+        uses: actions/checkout@v4
+
+      - name: Generate CRD from JSON schema
+        uses: ghcr.io/lucasepe/js2crd@v0.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
