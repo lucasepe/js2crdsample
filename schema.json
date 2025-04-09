@@ -1,53 +1,86 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
-    "apiVersion": {
-      "description": "kubernetes api version",
-      "type": "string",
-      "default": "widgets.templates.krateo.io/v1beta1"
-    },
-    "kind": {
-      "type": "string",
-      "default": "Button",
-      "description": "name of the k8s Custom Resource"
-    },
-    "metadata": {
-      "description": "kubernetes metadata",
-      "type": "object",
-      "properties": {
-        "namespace": { "type": "string" },
-        "name": { "type": "string" }
+      "version": {
+          "description": "widget version",
+          "type": "string",
+          "default": "v1beta1"
       },
-      "required": ["namespace", "name"]
-    },
-    "spec": {
-      "type": "object",
-      "properties": {
-        "widgetData": {
-          "description": "the data that will be passed to the widget on the frontend",
+      "kind": {
+          "type": "string",
+          "description": "name of the k8s Custom Resource",
+          "default": "Button"
+      },
+      "metadata": {
+          "type": "object",
+          "description": "kubernetes metadata",
+          "properties": {
+              "namespace": {
+                  "type": "string"
+              },
+              "name": {
+                  "type": "string"
+              }
+          },
+          "required": [
+              "namespace",
+              "name"
+          ]
+      },
+      "spec": {
           "type": "object",
           "properties": {
-            "label": {
-              "description": "the label of the button",
-              "type": "string"
-            },
-            "icon": {
-              "description": "the icon of the button (font awesome icon name eg: 'fa-inbox')",
-              "type": "string"
-            },
-            "type": {
-              "description": "the visual style of the button",
-              "type": "string",
-              "enum": ["default", "text", "link", "primary", "dashed"]
-            }
+              "widgetData": {
+                  "type": "object",
+                  "description": "the data that will be passed to the widget on the frontend",
+                  "additionalProperties": false,
+                  "properties": {
+                      "label": {
+                          "type": "string",
+                          "description": "the label of the button"
+                      },
+                      "icon": {
+                          "type": "string",
+                          "description": "the icon of the button (font awesome icon name eg: 'fa-inbox')"
+                      },
+                      "type": {
+                          "type": "string",
+                          "description": "the visual style of the button",
+                          "enum": [
+                              "default",
+                              "text",
+                              "link",
+                              "primary",
+                              "dashed"
+                          ]
+                      }
+                  }
+              },
+              "api": {
+                  "type": "object",
+                  "properties": {
+                      "name": {
+                          "type": "string"
+                      },
+                      "namespace": {
+                          "type": "string"
+                      }
+                  },
+                  "required": [
+                      "name",
+                      "namespace"
+                  ]
+              }
           },
-          "additionalProperties": false
-        }
-      },
-      "required": ["widgetData"]
-    }
+          "required": [
+              "widgetData"
+          ]
+      }
   },
-  "required": ["apiVersion", "kind", "metadata", "spec"],
-  "additionalProperties": false
+  "required": [
+      "kind",
+      "spec",
+      "version"
+  ]
 }
